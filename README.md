@@ -7,7 +7,7 @@
 
 An end-to-end Business Intelligence project built in **Power BI** that transforms raw, messy HR data into a fully interactive analytics suite — covering attrition, attendance, performance, and workforce demographics. Built to mirror a real workplace HR analytics engagement, from data cleaning through to executive-ready dashboards.
 
-**🔗 [Live Report / Screenshots](#.HR-Analytics/Screenshots)** · **📁 [Dataset](./Dataset)** · **📊 [.pbix File](./HR_Analytics_Dashboard.pbix)**
+**📁 [Dataset](./Dataset)** · **📊 [.pbix File](./HR_Analytics_Dashboard.pbix)** · **🖼️ [Screenshots](./Screenshots)**
 
 ---
 
@@ -108,7 +108,7 @@ Designed a **star schema** with `General Data` as the central fact/dimension hub
 - Easier to maintain and extend as new HR data sources are added
 - Keeps DAX measures simple by avoiding ambiguous relationship paths
 
-📷 *See [`Screenshots/data-model.png`](./Screenshots/data-model.png)*
+![Data Model](./Screenshots/data-model.png)
 
 ---
 
@@ -149,7 +149,7 @@ Full measure set: `Total Employees`, `Attrition Count`, `Attrition Rate`, `Avera
 
 **KPIs:** Total Employees · Attrition Count · Avg. Job Satisfaction · Avg. Performance Rating · Avg. Working Hours
 
-**Visuals:** Attrition by Department / Gender / Age Group · Avg. Satisfaction by Department · Avg. Performance by Department · Working Hours Trend · Recent Attrition Table
+**Visuals:** Attrition by Department / Gender / Age Group · Avg. Satisfaction by Department · Avg. Performance by Department · Working Hours Trend · Recent Attrition Employees Table
 
 **Key Insights:**
 - The **Human Resources department has the highest attrition rate** of any department
@@ -157,7 +157,7 @@ Full measure set: `Total Employees`, `Attrition Count`, `Attrition Rate`, `Avera
 - Satisfaction and performance scores show only modest variation across departments — attrition is not purely a satisfaction problem
 - Working hours fluctuate meaningfully across the year, suggesting seasonal workload spikes
 
-📷 `Screenshots/overview-dashboard.png`
+![Overview Dashboard](./Screenshots/overview-dashboard.png)
 
 ---
 
@@ -174,7 +174,7 @@ Full measure set: `Total Employees`, `Attrition Count`, `Attrition Rate`, `Avera
 - Income scales clearly with job level, as expected — but salary hike % doesn't always follow the same pattern
 - **Employees with longer commutes report lower satisfaction**, a signal worth investigating for retention risk
 
-📷 `Screenshots/employees-dashboard.png`
+![Employees Dashboard](./Screenshots/employees-dashboard.png)
 
 ---
 
@@ -191,7 +191,7 @@ Full measure set: `Total Employees`, `Attrition Count`, `Attrition Rate`, `Avera
 - Late arrivals show clear month-to-month fluctuation rather than being evenly distributed
 - Certain job roles have a **noticeably higher absence rate**, worth cross-referencing against the attrition data
 
-📷 `Screenshots/attendance-dashboard.png`
+![Attendance Dashboard](./Screenshots/attendance-dashboard.png)
 
 ---
 
@@ -227,13 +227,14 @@ This project simulates a real HR analytics engagement: starting from fragmented,
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻 About the Author
 
 **Mahmoud Saad**
-Aspiring Data Engineer / BI Developer — focused on data analytics, dashboard development, and end-to-end business intelligence solutions.
+Data Analyst / BI Developer specializing in Power BI, data modeling, and translating raw business data into actionable insight.
 
-📫 [LinkedIn](https://www.linkedin.com/in/mahmoud-saad0/) · [Github](https://github.com/Mahmoud2saad) · [Email](Mahmoud0Saad@outlook.com)
-
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mahmoud-saad0/)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/Mahmoud2saad)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:Mahmoud0Saad@outlook.com)
 
 ---
 
