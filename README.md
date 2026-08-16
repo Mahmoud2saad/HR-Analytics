@@ -377,7 +377,7 @@ The solution enables HR teams to:
 
 # 👨‍💻 Author
 
-**Mina Morkos**
+**Mahmoud Saad**
 
 Aspiring Data Engineer / BI Developer passionate about data analytics, dashboard development, and business intelligence solutions.
 
