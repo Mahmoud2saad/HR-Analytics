@@ -7,7 +7,7 @@
 
 An end-to-end Business Intelligence project built in **Power BI** that transforms raw, messy HR data into a fully interactive analytics suite — covering attrition, attendance, performance, and workforce demographics. Built to mirror a real workplace HR analytics engagement, from data cleaning through to executive-ready dashboards.
 
-**🔗 [Live Report / Screenshots](#-dashboard-previews)** · **📁 [Dataset](./Dataset)** · **📊 [.pbix File](./HR_Analytics_Dashboard.pbix)**
+**🔗 [Live Report / Screenshots](#.HR-Analytics/Screenshots)** · **📁 [Dataset](./Dataset)** · **📊 [.pbix File](./HR_Analytics_Dashboard.pbix)**
 
 ---
 
