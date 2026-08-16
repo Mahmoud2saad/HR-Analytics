@@ -1,55 +1,61 @@
-# HR Analytics Dashboard using Power BI
+# HR Analytics Dashboard | Power BI End-to-End BI Solution
 
-## 📌 Project Overview
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)
+![Power Query](https://img.shields.io/badge/Power%20Query-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen?style=for-the-badge)
 
-This project is an end-to-end **HR Analytics Solution** developed using **Power BI**, **Power Query**, and **DAX** to analyze employee behavior, workforce trends, attrition, attendance, satisfaction, and performance.
+An end-to-end Business Intelligence project built in **Power BI** that transforms raw, messy HR data into a fully interactive analytics suite — covering attrition, attendance, performance, and workforce demographics. Built to mirror a real workplace HR analytics engagement, from data cleaning through to executive-ready dashboards.
 
-The goal of this project is to transform raw HR datasets into meaningful business insights that support data-driven HR decision-making.
-
-The solution covers the complete Business Intelligence workflow:
-
-* Data Cleaning
-* Data Transformation
-* Data Modeling
-* DAX Calculations
-* Dashboard Design
-* Business Insights Extraction
+**🔗 [Live Report / Screenshots](#-dashboard-previews)** · **📁 [Dataset](./Dataset)** · **📊 [.pbix File](./HR_Analytics_Dashboard.pbix)**
 
 ---
 
-# 🎯 Business Objectives
+## 📌 Project Summary
 
-The dashboard was designed to help HR teams:
-
-* Analyze employee attrition patterns
-* Monitor employee attendance and overtime
-* Measure employee satisfaction and performance
-* Identify high-risk employee groups
-* Understand workforce demographics
-* Support HR strategic decision-making using data
-
----
-
-# 🛠️ Tools & Technologies Used
-
-| Tool          | Purpose                                 |
-| ------------- | --------------------------------------- |
-| Power BI      | Dashboard development & visualization   |
-| Power Query   | Data cleaning & transformation          |
-| DAX           | KPI calculations & measures             |
-| Data Modeling | Relationship management                 |
-| GitHub        | Project versioning & portfolio showcase |
+| | |
+|---|---|
+| **Objective** | Give HR leadership a single source of truth to diagnose *why* employees leave, *who* is at risk, and *where* attendance/performance issues concentrate |
+| **Data Sources** | 4 raw HR tables (General, Employee Survey, Manager Survey, In/Out Time logs) — ~4,400 rows, 40+ fields |
+| **Deliverables** | 3-page interactive Power BI dashboard, cleaned data model, DAX measure library, PPTX executive summary |
+| **My Role** | Solo — data cleaning, modeling, DAX, UX design, and insight write-up |
+| **Tools** | Power BI Desktop, Power Query (M), DAX, Star Schema data modeling |
 
 ---
 
-# 📂 Project Structure
+## 🎯 Business Problem & Objectives
 
-```bash
+HR held attrition, satisfaction, and attendance data across disconnected spreadsheets with no unified reporting layer. Leadership couldn't answer basic questions quickly: *Which department is bleeding talent? Is overtime driving attrition? Are satisfaction scores tied to commute distance?*
+
+This dashboard was built to:
+- Surface attrition patterns by department, age group, and gender
+- Monitor attendance, overtime, and late-arrival trends over time
+- Quantify the link between satisfaction/performance and retention
+- Flag high-risk employee segments before they become attrition statistics
+- Give HR a self-service tool instead of ad-hoc spreadsheet pulls
+
+---
+
+## 🛠️ Tools & Technical Stack
+
+| Tool | Purpose |
+|---|---|
+| **Power BI Desktop** | Dashboard development, DAX modeling, visualization |
+| **Power Query (M)** | Data cleaning, unpivoting, merging, transformation |
+| **DAX** | KPI measures, calculated columns, time intelligence |
+| **Data Modeling** | Star schema, relationship design, cardinality management |
+| **Git/GitHub** | Version control & portfolio hosting |
+
+---
+
+## 📂 Repository Structure
+
+```
 HR-Analytics-Dashboard/
 │
 ├── Dataset/
-│   ├── raw_data/
-│   └── cleaned_data/
+│   ├── raw_data/                     # Original, unprocessed HR exports
+│   └── cleaned_data/                 # Post Power Query transformation
 │
 ├── Presentation/
 │   └── HR_Analytics_Presentation.pptx
@@ -60,329 +66,175 @@ HR-Analytics-Dashboard/
 │   ├── attendance-dashboard.png
 │   └── data-model.png
 │
-├── HR_Analytics_Dashboard.pbix
+├── HR_Analytics_Dashboard.pbix       # Full Power BI report
 └── README.md
 ```
 
 ---
 
-# 🧹 Data Cleaning & Transformation
+## 🧹 Data Cleaning & Transformation (Power Query)
 
-## 1️⃣ Employee Survey Data
+Raw HR exports arrived across four disconnected tables with inconsistent encoding, missing values, and a wide/unpivoted time-log format. Key transformations:
 
-### Transformations:
+**1. Employee Survey Data**
+- Decoded numeric satisfaction codes (Environment, Job, Work-Life Balance) into readable labels
+- Imputed missing ratings with the **median (3)** rather than the mean, to avoid distorting the ordinal 1–4 scale with outlier sensitivity
 
-* Decoded Environment Satisfaction values into readable text categories
-* Decoded Job Satisfaction values into readable text categories
-* Decoded Work Life Balance values into readable text categories
-* Replaced missing values using the median value (3)
+**2. General Employee Data**
+- Decoded Education codes into readable categories
+- Dropped constant-value columns (`EmployeeCount`, `Over18`, `StandardHours`) — zero analytical value, pure noise
+- Imputed missing values in `NumCompaniesWorked` (median = 2) and `TotalWorkingYears` (median = 10)
+- Engineered new fields: **Age Group**, **Distance Group**, and a **Distance Sort key** for correct visual ordering
 
-### Why Median?
+**3. In-Time / Out-Time Logs**
+- **Unpivoted** both wide-format tables (one column per date → one row per employee-date) to enable time-series analysis and relationship modeling
+- Standardized null timestamps to a sentinel date (`01-01-1900`) to preserve row integrity without breaking joins
+- Built a unified **Attendance fact table** by merging In/Out logs, then calculated **daily working hours per employee**
 
-The median was used instead of the mean because it is less affected by outliers and better preserves the natural distribution of ordinal survey ratings.
+**4. Manager Survey Data**
+- Decoded Job Involvement and Performance Rating codes into readable categories
 
----
-
-## 2️⃣ General Data
-
-### Transformations:
-
-* Decoded Education values into readable categories
-* Removed Employee Count column because it contained a constant value for all employees
-* Replaced missing values in Number of Companies Worked using the median value (2)
-* Replaced missing values in Total Working Years using the median value (10)
-* Removed Over18 column because all employees had the same value
-* Removed Standard Hours column because all employees had the same value (8)
-* Added Age Group column
-* Added Distance Group column
-* Added Distance Sort column for proper visual sorting
+> **Why this matters:** ~30% of the total build time went into this stage. Clean, well-typed, properly-shaped data is what makes the DAX layer fast and the visuals trustworthy — this is the part of BI work that doesn't show up in screenshots but determines whether the dashboard is actually usable.
 
 ---
 
-## 3️⃣ In Time & Out Time Tables
+## 🧠 Data Modeling
 
-### Transformations:
+Designed a **star schema** with `General Data` as the central fact/dimension hub, connected to Survey and Attendance tables via `EmployeeID` using one-to-many relationships. A dedicated **Measures Table** (no data, DAX only) keeps all calculations organized and separate from raw fields.
 
-* Unpivoted both tables
-* Converted dates from columns into rows
-* Replaced null date values with:
+**Why star schema over a flat/wide table:**
+- Faster query performance — Power BI's VertiPaq engine is optimized for star schemas
+- Simpler, more predictable filter propagation across visuals
+- Easier to maintain and extend as new HR data sources are added
+- Keeps DAX measures simple by avoiding ambiguous relationship paths
 
-```text
-01-01-1900 12:00:00 AM
+📷 *See [`Screenshots/data-model.png`](./Screenshots/data-model.png)*
+
+---
+
+## 📊 DAX Measures & KPI Library
+
+Built a reusable measure library covering core HR KPIs, including:
+
+```dax
+Attrition Rate = 
+DIVIDE(
+    [Attrition Count],
+    [Total Employees],
+    0
+)
+
+Attendance Rate = 
+DIVIDE(
+    [Days Present],
+    [Total Working Days],
+    0
+)
+
+Average Working Hours = 
+AVERAGEX(
+    Attendance,
+    Attendance[WorkingHours]
+)
 ```
 
-* Added a separate Date column
-
-### Why Unpivoting?
-
-Unpivoting transformed the data into a normalized structure suitable for:
-
-* Time-series analysis
-* Filtering
-* Relationship modeling
-* Attendance calculations
+Full measure set: `Total Employees`, `Attrition Count`, `Attrition Rate`, `Average Satisfaction`, `Average Performance Rating`, `Average Working Hours`, `Attendance Rate`, `Overtime Rate`, `Late Arrival %`, `Average Income`, `Average Years at Company`.
 
 ---
 
-## 4️⃣ Manager Survey Data
+## 📈 Dashboard Pages
 
-### Transformations:
+### 🏠 1. Overview Dashboard
+**Purpose:** Executive-level snapshot of attrition, satisfaction, performance, and attendance.
 
-* Decoded Job Involvement values into readable text categories
-* Decoded Performance Rating values into readable text categories
+**KPIs:** Total Employees · Attrition Count · Avg. Job Satisfaction · Avg. Performance Rating · Avg. Working Hours
 
----
+**Visuals:** Attrition by Department / Gender / Age Group · Avg. Satisfaction by Department · Avg. Performance by Department · Working Hours Trend · Recent Attrition Table
 
-## 5️⃣ Attendance Table Creation
+**Key Insights:**
+- The **Human Resources department has the highest attrition rate** of any department
+- **Younger employees (18–25 age group) leave at a disproportionately higher rate**
+- Satisfaction and performance scores show only modest variation across departments — attrition is not purely a satisfaction problem
+- Working hours fluctuate meaningfully across the year, suggesting seasonal workload spikes
 
-A new Attendance table was created by merging:
-
-* In Time table
-* Out Time table
-
-### The table includes:
-
-* Employee ID
-* Date
-* In Time
-* Out Time
-* Working Hours
-
-### Additional Calculations:
-
-* Working hours were calculated per employee per day.
+📷 `Screenshots/overview-dashboard.png`
 
 ---
 
-# 🧠 Data Modeling
+### 👥 2. Employees Dashboard
+**Purpose:** Workforce demographics, compensation, and distribution analysis.
 
-The project follows a **Star-Like Schema** design.
+**KPIs:** Avg. Age · Avg. Income · Avg. Years at Company · Avg. Salary Hike · Avg. Training
 
-## Model Design:
+**Visuals:** Distribution by Job Role · Age Distribution · Income by Job Level · Gender Distribution · Years at Company by Department · Marital Status · Education Field · Satisfaction by Distance Group · Satisfaction by Job Level & Department
 
-* General Data acts as the central table
-* Survey and attendance tables are connected using EmployeeID
-* One-to-Many relationships were used for optimized filtering and aggregation
-* A dedicated Measures Table was created to organize all DAX calculations
+**Key Insights:**
+- The **26–35 age group** makes up the largest share of the workforce
+- **Research Scientist** and **Sales Executive** are the dominant job roles by headcount
+- Income scales clearly with job level, as expected — but salary hike % doesn't always follow the same pattern
+- **Employees with longer commutes report lower satisfaction**, a signal worth investigating for retention risk
 
-### Why Star Schema?
-
-* Better Power BI performance
-* Easier maintenance
-* Simpler relationships
-* More efficient DAX calculations
-* Cleaner and scalable architecture
+📷 `Screenshots/employees-dashboard.png`
 
 ---
 
-# 📊 DAX Measures & KPIs
+### ⏰ 3. Attendance Dashboard
+**Purpose:** Tracks attendance behavior, overtime, and lateness patterns.
 
-The project includes several DAX measures such as:
+**KPIs:** Avg. Working Hours · Attendance Rate · Avg. Absent Days · Late Arrival % · Overtime Rate
 
-* Total Employees
-* Attrition Count
-* Attrition Rate
-* Average Satisfaction
-* Average Performance Rating
-* Average Working Hours
-* Attendance Rate
-* Overtime Rate
-* Late Arrival Percentage
-* Average Income
-* Average Years at Company
+**Visuals:** Absent Days by Job Role · Late Arrival Trend · Absent Days by Gender · Overtime Days by Job Role · Overtime by Gender · Attendance Details Table
 
----
+**Key Insights:**
+- A small subset of job roles account for a disproportionate share of overtime hours
+- Attendance behavior differs slightly by gender, though the gap is narrow
+- Late arrivals show clear month-to-month fluctuation rather than being evenly distributed
+- Certain job roles have a **noticeably higher absence rate**, worth cross-referencing against the attrition data
 
-# 📈 Dashboard Pages
+📷 `Screenshots/attendance-dashboard.png`
 
 ---
 
-# 🏠 1. Overview Dashboard
+## 🎨 UI/UX Design Approach
 
-## Purpose
-
-Provides a high-level overview of employee attrition, satisfaction, performance, and attendance trends.
-
-## KPIs Included
-
-* Total Employees
-* Attrition Count
-* Average Job Satisfaction
-* Average Performance Rating
-* Average Working Hours
-
-## Visuals Included
-
-* Attrition by Department
-* Attrition by Gender
-* Attrition by Age Group
-* Average Satisfaction by Department
-* Average Performance Rating by Department
-* Average Working Hours Trend
-* Recent Attrition Employees Table
-
-## Key Insights
-
-* Human Resources department has the highest attrition rate.
-* Younger employees are more likely to leave the company.
-* Satisfaction and performance vary slightly across departments.
-* Working hours fluctuate throughout the year.
+Designed with a modern corporate aesthetic rather than default Power BI theming:
+- Custom sidebar navigation with interactive page-switching buttons
+- Consistent color palette and modern KPI cards
+- Responsive layout with clear visual hierarchy to guide the eye toward the most important metrics first
+- Prioritized readability and narrative flow over visual density — each page tells one story, not ten
 
 ---
 
-## 📷 Dashboard Preview
+## 🚀 Key Highlights
 
-![Overview Dashboard](Screenshots/Overview-Dashboard.png)
-
----
-
-# 👥 2. Employees Dashboard
-
-## Purpose
-
-Analyzes workforce demographics, salaries, education, and employee distribution.
-
-## KPIs Included
-
-* Average Age
-* Average Income
-* Average Years at Company
-* Average Salary Hike
-* Average Training
-
-## Visuals Included
-
-* Employee Distribution by Job Role
-* Age Distribution
-* Income by Job Level
-* Gender Distribution
-* Years at Company by Department
-* Marital Status Distribution
-* Education Field Distribution
-* Satisfaction by Distance Group
-* Satisfaction by Job Level and Department
-
-## Key Insights
-
-* Most employees belong to the 26–35 age group.
-* Research Scientist and Sales Executive are dominant job roles.
-* Higher job levels correspond to higher salaries.
-* Satisfaction levels vary based on commuting distance.
+- ✅ **Full BI lifecycle** — raw data → cleaning → modeling → DAX → dashboard → business insight
+- ✅ **Advanced Power Query** — unpivoting, table merges, null handling, calculated columns
+- ✅ **Star schema data model** optimized for performance and maintainability
+- ✅ **11+ custom DAX measures** covering attrition, attendance, and performance KPIs
+- ✅ **3 fully interactive dashboard pages** with cross-filtering and drill-through
+- ✅ **Actionable business insights**, not just charts — each page ends in a "so what"
 
 ---
 
-## 📷 Dashboard Preview
+## 📌 Conclusion & Business Impact
 
-![Employees Dashboard](Screenshots/Employees-Dashboard.png)
+This project simulates a real HR analytics engagement: starting from fragmented, uncleaned data and ending with a self-service reporting tool that lets HR leadership:
 
----
-
-# ⏰ 3. Attendance Dashboard
-
-## Purpose
-
-Tracks employee attendance behavior, overtime, lateness, and absence trends.
-
-## KPIs Included
-
-* Average Working Hours
-* Attendance Rate
-* Average Absent Days
-* Late Arrivals Percentage
-* Overtime Rate
-
-## Visuals Included
-
-* Total Absent Days by Job Role
-* Late Arrivals Trend
-* Absent Days by Gender
-* Overtime Days by Job Role
-* Overtime by Gender
-* Attendance Details Table
-
-## Key Insights
-
-* Some job roles experience significantly more overtime.
-* Attendance behavior varies slightly between genders.
-* Late arrivals fluctuate across different months.
-* Certain job roles have noticeably higher absence rates.
+- Identify and prioritize departments/roles at highest attrition risk
+- Investigate the link between commute distance, satisfaction, and retention
+- Monitor overtime and attendance trends to flag burnout risk early
+- Move from reactive, spreadsheet-based reporting to proactive, data-driven HR decisions
 
 ---
 
-## 📷 Dashboard Preview
-
-![Attendance Dashboard](Screenshots/Attendance-Dashboard.png)
-
----
-
-# 🧩 Data Model
-
-## 📷 Data Model Preview
-
-![Data Model](Screenshots/Data-Model.png)
-
----
-
-# 🎨 UI / UX Design
-
-The dashboards were designed using a modern corporate UI style.
-
-## Design Features
-
-* Custom sidebar navigation
-* Interactive buttons
-* Consistent color palette
-* Modern KPI cards
-* Responsive layout
-* Clean visual hierarchy
-
-The main focus was improving:
-
-* Readability
-* User experience
-* Dashboard navigation
-* Business storytelling
-
----
-
-# 🚀 Project Highlights
-
-✅ End-to-End BI Workflow
-
-✅ Advanced Power Query Transformations
-
-✅ DAX Calculations & KPIs
-
-✅ Star Schema Data Modeling
-
-✅ Interactive Dashboard Design
-
-✅ HR Business Insights Extraction
-
----
-
-# 📌 Conclusion
-
-This project demonstrates a complete Business Intelligence workflow starting from raw HR data all the way to interactive dashboards and business insights.
-
-The solution enables HR teams to:
-
-* Reduce attrition
-* Improve employee satisfaction
-* Monitor attendance patterns
-* Understand workforce behavior
-* Make data-driven decisions
-
----
-
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 **Mahmoud Saad**
+Aspiring Data Engineer / BI Developer — focused on data analytics, dashboard development, and end-to-end business intelligence solutions.
 
-Aspiring Data Engineer / BI Developer passionate about data analytics, dashboard development, and business intelligence solutions.
+📫 [LinkedIn](https://www.linkedin.com/in/mahmoud-saad0/) · [Github](https://github.com/Mahmoud2saad) · [Email](Mahmoud0Saad@outlook.com)
+
 
 ---
 
-# ⭐ If you found this project useful
-
-Consider giving the repository a star ⭐
+⭐ **If you found this project useful, consider giving the repository a star.**
